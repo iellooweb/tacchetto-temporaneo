@@ -1,0 +1,23 @@
+# Materiale di lavoro: screenshot di riferimento e mockup del cliente.
+# Le immagini che servono davvero alle pagine stanno in img/ e sono versionate.
+risorse/
+
+# Brief interno e appunti di lavorazione
+prompt_iniziale.md
+
+# Dump di database ed esportazioni: non devono MAI finire in un repo pubblico
+non toccare/
+*.sql
+*.sql.gz
+*.zip
+
+# Documenti interni (ore, preventivi, costi)
+*preventivo*
+*ore*.md
+
+# Sistema operativo ed editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp

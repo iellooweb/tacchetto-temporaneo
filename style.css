@@ -1,0 +1,954 @@
+/* ==========================================================================
+   Tacchetto Service — DEMO statica
+   Replica di stile del sito tacchettoservice.it + nuovo servizio
+   "Riparazione e Ricondizionamento".
+   Nessun framework, nessuna build. Unica dipendenza esterna: Google Fonts.
+   ========================================================================== */
+
+/* --------------------------------------------------------------- tokens -- */
+:root {
+  /* colori campionati dagli screenshot in /risorse */
+  --lime:        #b4d114;
+  --lime-dark:   #9bb50e;
+  --lime-pale:   #eff3da;
+  --lime-header: #dbe7a5;   /* barra header versione mobile */
+  --navy:        #1a3584;   /* card "Assistenza" */
+  --navy-deep:   #1a386a;   /* footer */
+  --ink:         #222222;   /* card "Noleggio", bottoni scuri */
+  --page:        #f9fafc;
+  --hero-grey:   #d0d7e1;   /* hero pagina Assistenza */
+
+  /* giallo: segnale visivo del nuovo servizio (hero, card, pagina assistenza) */
+  --accent-new:      #ffd400;
+  --accent-new-soft: rgba(255, 212, 0, .18);
+
+  /* nuova palette "metallizzata" per il ricondizionamento */
+  --steel-900:   #1e242c;
+  --steel-700:   #2f3742;
+  --steel-500:   #4a5563;
+  --steel-300:   #8b95a3;
+
+  --white:       #ffffff;
+  --muted:       #5b6470;
+  --line:        rgba(0,0,0,.10);
+
+  --demo-h:      34px;   /* altezza della fascia DEMO fissa in cima */
+
+  --radius:      10px;
+  --radius-lg:   16px;
+  --maxw:        1200px;
+  --gutter:      24px;
+
+  --ff-display: "Oswald", "Barlow Condensed", "Arial Narrow", sans-serif;
+  --ff-body:    "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* ----------------------------------------------------------------- base -- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--demo-h) + 96px); }
+
+body {
+  margin: 0;
+  padding-top: var(--demo-h);   /* spazio per la fascia DEMO fissa */
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--ff-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* height:auto annulla l'attributo height dell'<img>: senza, l'immagine si deforma */
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; }
+
+h1, h2, h3, h4 {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  line-height: 1.08;
+  margin: 0 0 .5em;
+  letter-spacing: .01em;
+}
+
+p { margin: 0 0 1em; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding: 72px 0; }
+.section--pale  { background: var(--lime-pale); }
+.section--white { background: var(--white); }
+.section--page  { background: var(--page); }
+
+.section-head { text-align: center; max-width: 760px; margin: 0 auto 44px; }
+.section-head h2 {
+  font-size: clamp(2rem, 4.6vw, 2.9rem);
+  text-transform: uppercase;
+}
+.section-head .sub {
+  font-family: var(--ff-display);
+  font-weight: 600;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  margin-bottom: .6em;
+}
+.section-head .zones { font-size: .875rem; color: var(--muted); margin: 0; }
+
+/* -------------------------------------------------------------- bottoni -- */
+.btn {
+  display: inline-block;
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: .8125rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: filter .15s ease, transform .15s ease;
+}
+.btn:hover { filter: brightness(.93); }
+.btn:active { transform: translateY(1px); }
+
+.btn--lime  { background: var(--lime);  color: var(--ink); }
+.btn--dark  { background: var(--ink);   color: var(--white); }
+.btn--white { background: var(--white); color: var(--navy); }
+.btn--ghost  { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn--accent { background: var(--accent-new); color: var(--ink); box-shadow: 0 0 0 4px var(--accent-new-soft); }
+.btn--lg    { padding: 16px 34px; font-size: .95rem; }
+
+/* bottoncino "dettagli" delle card servizi */
+.btn--card { text-transform: lowercase; letter-spacing: 0; font-size: .95rem; padding: 10px 20px; }
+.card--steel .btn--card { background: var(--accent-new); color: var(--ink); box-shadow: none; }
+
+/* evidenziatore giallo: "Riparazione e Rigenerazione" nelle hero */
+.hl {
+  display: inline-block;
+  background: var(--accent-new);
+  color: #1b1b1b;
+  font-family: var(--ff-display);
+  font-weight: 600;
+  letter-spacing: .01em;
+  padding: .1em .45em;
+  border-radius: 5px;
+  text-shadow: none;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.hero-extra { margin-bottom: .8em; font-size: 1.2rem; line-height: 1.35; }
+
+/* coppia di CTA nella hero della pagina Assistenza: devono stare affiancate
+   anche nella colonna stretta, quindi padding ridotto rispetto a .btn--lg */
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-actions .btn--lg { padding: 15px 20px; font-size: .88rem; }
+
+/* ------------------------------------------------ segnaposto immagini ---- */
+/* Le foto originali del sito non sono disponibili come file: al loro posto
+   un blocco grigio etichettato, così la demo resta leggibile e navigabile. */
+.ph {
+  background: #dfe3e8;
+  border: 1px dashed #b3bbc5;
+  border-radius: var(--radius);
+  color: #6b7684;
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 14px;
+  min-height: 120px;
+  /* come figli di una griglia non devono gonfiare la colonna con etichette lunghe */
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.ph--dark {
+  background: #464e59;
+  border-color: rgba(255,255,255,.25);
+  color: #b6bec9;
+}
+
+/* ================================================== banner demo (temporaneo) */
+/* Fascia fissa in cima a ogni pagina: rimanda alla spiegazione delle
+   modifiche. Va rimossa insieme al resto della demo dopo l'approvazione. */
+.demo-banner {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 200;
+  height: var(--demo-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-inline: 14px;
+  background: var(--steel-900);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  color: #cfd6df;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.demo-banner strong { color: var(--accent-new); font-weight: 700; }
+.demo-banner .sep   { opacity: .35; }
+.demo-banner .cta {
+  color: var(--accent-new);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 212, 0, .55);
+  padding-bottom: 1px;
+  transition: color .15s ease, border-color .15s ease;
+}
+.demo-banner:hover .cta { color: var(--white); border-color: var(--white); }
+
+/* ============================================================== header ==== */
+.site-header {
+  position: sticky;
+  top: var(--demo-h);
+  z-index: 50;
+  background: var(--page);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.header-inner {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 10px var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.wa-btn {
+  flex: none;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #11a37e;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  text-decoration: none;
+}
+.wa-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex: none;
+  padding-left: 14px;
+  border-left: 1px dotted rgba(0,0,0,.25);
+}
+.logo-mark {
+  width: 40px; height: 40px;
+  border-radius: 50% 42% 50% 42%;
+  background: radial-gradient(circle at 34% 30%, #d6ea4e 0%, var(--lime) 55%, #93ad0c 100%);
+  border: 2px solid var(--navy);
+  display: grid; place-items: center;
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--navy);
+  letter-spacing: -.04em;
+}
+.logo-text { display: flex; flex-direction: column; line-height: 1; }
+.logo-text b {
+  font-family: var(--ff-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #2b6ca8;
+}
+.logo-text i {
+  font-size: .82rem;
+  font-style: italic;
+  letter-spacing: .18em;
+  color: #2b6ca8;
+}
+
+/* nav a pillola bianca, voce attiva lime */
+.mainnav { margin-inline: auto; }
+.mainnav ul {
+  list-style: none;
+  margin: 0; padding: 6px;
+  display: flex;
+  gap: 4px;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.07);
+}
+.mainnav a {
+  display: block;
+  padding: 9px 16px;
+  border-radius: 6px;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.mainnav a:hover { background: var(--lime-pale); }
+.mainnav a.is-active { background: var(--lime); }
+
+.header-cta { flex: none; }
+
+/* hamburger CSS-only (nessun JS) */
+.nav-toggle { display: none; }
+.burger {
+  display: none;
+  width: 46px; height: 38px;
+  border-radius: 8px;
+  background: var(--lime);
+  cursor: pointer;
+  place-items: center;
+}
+.burger span, .burger span::before, .burger span::after {
+  content: "";
+  display: block;
+  width: 22px; height: 3px;
+  background: var(--ink);
+  border-radius: 2px;
+  position: relative;
+}
+.burger span::before { position: absolute; top: -7px; }
+.burger span::after  { position: absolute; top:  7px; }
+
+/* =============================================== decorazione "bolle" ====== */
+.bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .5;
+  background:
+    radial-gradient(circle at 82% 22%, rgba(255,255,255,.95) 0 2.4%, rgba(255,255,255,0) 2.7%),
+    radial-gradient(circle at 90% 38%, rgba(255,255,255,.75) 0 3.6%, rgba(255,255,255,0) 3.9%),
+    radial-gradient(circle at 74% 52%, rgba(255,255,255,.85) 0 1.6%, rgba(255,255,255,0) 1.9%),
+    radial-gradient(circle at 88% 66%, rgba(255,255,255,.7)  0 4.4%, rgba(255,255,255,0) 4.7%),
+    radial-gradient(circle at 70% 78%, rgba(255,255,255,.8)  0 2.1%, rgba(255,255,255,0) 2.4%),
+    radial-gradient(circle at 95% 86%, rgba(255,255,255,.6)  0 3%,   rgba(255,255,255,0) 3.3%);
+}
+.bubbles--navy {
+  opacity: .28;
+  background:
+    radial-gradient(circle at 88% 30%, rgba(120,180,255,.9) 0 3%, rgba(255,255,255,0) 3.3%),
+    radial-gradient(circle at 95% 55%, rgba(120,180,255,.7) 0 4.6%, rgba(255,255,255,0) 4.9%),
+    radial-gradient(circle at 80% 72%, rgba(120,180,255,.8) 0 2.2%, rgba(255,255,255,0) 2.5%),
+    radial-gradient(circle at 92% 88%, rgba(120,180,255,.6) 0 3.4%, rgba(255,255,255,0) 3.7%);
+}
+
+/* ============================================== HOME — hero due box ======= */
+.hero-duo { padding: 28px 0 0; }
+.hero-duo .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.hero-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 300px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 36px 28px;
+}
+.hero-card .ph {
+  position: absolute; inset: 0;
+  border-radius: 0;
+  border: 0;
+  min-height: 0;
+  align-items: flex-end;
+  justify-content: flex-start;
+  font-size: .62rem;
+  padding: 10px 12px;
+}
+.hero-card .hero-copy { position: relative; }
+.hero-card h2 {
+  color: var(--white);
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  text-transform: uppercase;
+  text-shadow: 0 2px 14px rgba(0,0,0,.55);
+  margin-bottom: .35em;
+}
+.hero-card p {
+  color: rgba(255,255,255,.95);
+  font-size: 1.05rem;
+  text-shadow: 0 1px 10px rgba(0,0,0,.6);
+  margin-bottom: 1.1em;
+}
+.hero-link {
+  color: var(--white);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 0 1px 10px rgba(0,0,0,.6);
+}
+.hero-link::after { content: " →"; }
+
+/* blocco logo centrale */
+.logo-block { text-align: center; padding: 56px 0 64px; }
+.logo-block .logo-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.logo-block .logo-mark { width: 92px; height: 92px; font-size: 2.4rem; border-width: 3px; }
+.logo-block .logo-text b { font-size: 2.9rem; }
+.logo-block .logo-text i { font-size: 1.5rem; letter-spacing: .2em; }
+.logo-block .claim { font-size: .95rem; color: #3a4048; margin-bottom: 1.6em; }
+.logo-block .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ==================================== sezione servizi (card) ============== */
+.cards > *, .thumbs > *, .rental-grid > *, .recond-grid > *, .recond-gallery > * { min-width: 0; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  padding: 30px 26px 28px;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+.card > * { position: relative; z-index: 1; }
+.card h3 {
+  font-size: 1.45rem;
+  margin-bottom: .6em;
+}
+.card p { font-size: .95rem; }
+.card .btn { align-self: flex-start; margin-top: auto; }
+
+.card ul {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  font-size: .95rem;
+}
+.card li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.card li::before {
+  content: "✓";
+  flex: none;
+  width: 19px; height: 19px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--lime);
+  font-size: .72rem;
+  display: grid; place-items: center;
+}
+
+.card--lime { background: var(--lime); color: var(--ink); }
+.card--navy { background: var(--navy); color: var(--white); }
+.card--dark { background: var(--ink);  color: var(--white); }
+
+/* NUOVA card: "Riparazione e Ricondizionamento" — grigio metallizzato.
+   Bordo giallo + alone: deve saltare all'occhio nella demo inviata al cliente. */
+.card--steel {
+  background: linear-gradient(150deg, var(--steel-700) 0%, var(--steel-500) 52%, var(--steel-900) 100%);
+  color: var(--white);
+  border: 3px solid var(--accent-new);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 0 0 6px var(--accent-new-soft),
+    0 16px 34px rgba(0,0,0,.28);
+}
+.card--steel::after {           /* riflesso metallico diagonale */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,.14) 50%, transparent 62%);
+}
+.card--steel .card-tag {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--accent-new);
+  color: var(--ink);
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+/* galleria foto sotto le card */
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-top: 44px;
+}
+.thumbs .ph { min-height: 96px; aspect-ratio: 4 / 3; }
+
+/* ===================================== ASSISTENZA — hero interno ========== */
+.page-hero {
+  position: relative;
+  background: var(--hero-grey);
+  overflow: hidden;
+  padding: 56px 0 72px;
+}
+.page-hero .grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.eyebrow {
+  font-weight: 600;
+  font-size: .92rem;
+  margin-bottom: 18px;
+}
+.hero-icon {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  display: grid; place-items: center;
+  font-size: 1.7rem;
+  margin-bottom: 22px;
+}
+.page-hero h1 {
+  font-size: clamp(2.1rem, 4.6vw, 3.2rem);
+  text-transform: uppercase;
+  margin-bottom: .45em;
+}
+.page-hero .lead { font-size: 1rem; max-width: 46ch; margin-bottom: 1.8em; }
+.page-hero .ph { min-height: 340px; }
+
+.intro { position: relative; padding-bottom: 72px; background: var(--hero-grey); }
+.intro-inner { position: relative; max-width: 760px; }
+.intro h2 {
+  font-size: 1.32rem;
+  text-transform: uppercase;
+  margin-bottom: 1em;
+}
+.intro p { font-size: .96rem; }
+
+/* ============================ NUOVA SEZIONE: RICONDIZIONAMENTO =========== */
+.recond {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(160deg, var(--steel-700) 0%, var(--steel-900) 60%, #14181e 100%);
+  color: var(--white);
+  padding: 84px 0;
+  border-top: 4px solid var(--lime);
+}
+.recond::before {             /* trama metallica leggera */
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .5;
+  background:
+    repeating-linear-gradient(115deg, rgba(255,255,255,.035) 0 2px, transparent 2px 7px),
+    radial-gradient(ellipse at 22% 0%, rgba(255,255,255,.12), transparent 62%);
+}
+.recond > .wrap { position: relative; z-index: 1; }
+
+.recond-head { max-width: 780px; margin-bottom: 46px; }
+.recond-tag {
+  display: inline-block;
+  background: var(--lime);
+  color: var(--ink);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.recond-head h2 {
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  text-transform: uppercase;
+  margin-bottom: .25em;
+}
+.recond-head .sub {
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  color: var(--lime);
+  margin-bottom: .9em;
+}
+.recond-head p { color: #c9d1db; font-size: 1.02rem; max-width: 62ch; }
+
+.recond-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 430px) 1fr;
+  gap: 44px;
+  align-items: start;
+}
+
+/* colonna prima/dopo */
+.beforeafter figure {
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.22);
+  background: #0f1216;
+  box-shadow: 0 20px 44px rgba(0,0,0,.45);
+}
+/* la grafica prima/dopo e' molto verticale: si limita l'altezza e si lascia
+   respirare sui lati invece di ritagliarla, cosi' resta leggibile per intero */
+.beforeafter img {
+  width: auto;
+  max-width: 100%;
+  max-height: 720px;
+  height: auto;
+  margin-inline: auto;
+}
+.beforeafter figcaption {
+  font-size: .74rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--steel-300);
+  padding: 12px 16px;
+  background: rgba(255,255,255,.05);
+}
+
+/* elenco lavorazioni */
+.recond-list { list-style: none; margin: 0 0 30px; padding: 0; }
+.recond-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,.13);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.recond-list li::before {
+  content: "✓";
+  flex: none;
+  width: 24px; height: 24px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--ink);
+  font-size: .82rem;
+  font-weight: 700;
+  display: grid; place-items: center;
+}
+
+/* badge garanzia */
+.warranty {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(180, 209, 20, .12);
+  border: 1px solid var(--lime);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 28px;
+}
+.warranty .n {
+  flex: none;
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--lime);
+}
+.warranty strong {
+  display: block;
+  font-family: var(--ff-display);
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+.warranty span { font-size: .88rem; color: #c9d1db; }
+
+.recond-cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.recond-cta .phone { font-size: .92rem; color: #c9d1db; }
+.recond-cta .phone strong { color: var(--white); }
+
+/* foto orizzontale che chiude la colonna destra */
+.recond-figure {
+  margin: 34px 0 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.18);
+  background: #0f1216;
+}
+.recond-figure img { width: 100%; height: auto; }
+.recond-figure figcaption {
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--steel-300);
+  padding: 11px 14px;
+}
+
+/* galleria interventi */
+.recond-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 54px;
+}
+.recond-gallery figure {
+  margin: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.18);
+  background: #0f1216;
+}
+.recond-gallery img {
+  width: auto;
+  max-width: 100%;
+  height: 420px;
+  object-fit: contain;      /* niente ritagli: sono grafiche con testo */
+  margin-inline: auto;
+}
+.recond-gallery figcaption {
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--steel-300);
+  padding: 11px 14px;
+}
+
+/* ================================== galleria "Impianti a noleggio" ======== */
+.rental-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.rental-grid .ph { min-height: 132px; aspect-ratio: 4 / 3; }
+
+/* ============================================ form di contatto =========== */
+.contact { padding: 72px 0; background: var(--page); }
+.contact-box {
+  background: var(--lime);
+  border-radius: var(--radius-lg);
+  padding: 52px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px;
+  align-items: center;
+}
+.contact-copy h2 {
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  text-transform: uppercase;
+  margin-bottom: .35em;
+}
+.contact-copy .q { font-size: 1.15rem; margin-bottom: 1.4em; }
+.contact-copy p { font-size: .95rem; margin-bottom: .8em; }
+
+.contact-form {
+  background: rgba(255,255,255,.28);
+  border-radius: var(--radius);
+  padding: 26px;
+}
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  font-family: var(--ff-body);
+  font-size: .95rem;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--ink);
+}
+.contact-form textarea { min-height: 96px; resize: vertical; }
+.contact-form input:focus,
+.contact-form textarea:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+
+.form-foot {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+}
+.privacy { font-size: .68rem; line-height: 1.45; color: #2c3313; }
+.privacy input { margin-right: 6px; }
+.form-foot .btn { padding: 14px 40px; text-transform: none; font-size: 1rem; }
+
+/* =============================================================== footer === */
+.breadcrumb {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,.8);
+  font-size: .78rem;
+  padding: 26px 0 0;
+}
+.site-footer {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy-deep);
+  color: var(--white);
+  padding: 22px 0 0;
+}
+.footer-box {
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 36px;
+  margin-bottom: 26px;
+}
+.footer-box .logo-mark { width: 44px; height: 44px; }
+.footer-box .logo { border: 0; padding: 0; margin-bottom: 22px; }
+.footer-box .logo-text b,
+.footer-box .logo-text i { color: #eaf0f7; }
+.footer-box h4 {
+  font-family: var(--ff-body);
+  font-weight: 700;
+  font-size: .88rem;
+  margin-bottom: 16px;
+}
+.footer-col--right { text-align: right; }
+.footer-box ul { list-style: none; margin: 0; padding: 0; }
+.footer-box li { margin-bottom: 9px; font-size: .84rem; }
+.footer-box a { color: rgba(255,255,255,.88); text-decoration: none; }
+.footer-box a:hover { color: var(--lime); }
+.footer-info { font-size: .84rem; }
+.footer-info strong { display: block; margin-bottom: 4px; font-size: .84rem; }
+.footer-info p { margin-bottom: 14px; color: rgba(255,255,255,.88); }
+.socials { display: flex; gap: 14px; margin-top: 18px; }
+.socials a {
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+  color: var(--white);
+}
+.socials svg { width: 20px; height: 20px; fill: currentColor; }
+
+.footer-bar {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(255,255,255,.12);
+  padding: 18px 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: .78rem;
+  color: rgba(255,255,255,.78);
+}
+.footer-bar nav { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.footer-bar a { text-decoration: none; }
+.cookie-btn {
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.2);
+  color: var(--white);
+  font-family: var(--ff-body);
+  font-size: .76rem;
+  padding: 7px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ========================================================= responsive ==== */
+@media (max-width: 640px) {
+  .demo-banner .txt, .demo-banner .sep { display: none; }
+}
+
+/* la voce "Assistenza & Rigenerazione" e' lunga: sotto i 1200px il menu si
+   stringe per restare su una riga accanto a logo e bottone */
+@media (max-width: 1200px) {
+  .mainnav a   { padding: 9px 11px; font-size: .72rem; letter-spacing: .03em; }
+  .header-cta  { padding: 12px 16px; }
+  .header-inner { gap: 12px; }
+}
+
+@media (max-width: 1080px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .thumbs { grid-template-columns: repeat(3, 1fr); }
+  .rental-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 960px) {
+  /* header: nav a tendina + barra lime, come negli screenshot mobile */
+  .site-header { background: var(--lime-header); }
+  .header-inner { gap: 12px; }
+  .logo { margin-inline: auto; }
+  .burger { display: grid; }
+  .header-cta { display: none; }
+
+  .mainnav {
+    position: absolute;
+    left: 0; right: 0;
+    top: 100%;
+    margin: 0;
+    background: var(--white);
+    box-shadow: 0 12px 24px rgba(0,0,0,.14);
+    display: none;
+  }
+  .nav-toggle:checked ~ .mainnav { display: block; }
+  .mainnav ul {
+    flex-direction: column;
+    gap: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 8px;
+  }
+  .mainnav a { padding: 14px 16px; font-size: .9rem; }
+
+  .hero-duo .grid { grid-template-columns: 1fr; }
+  .page-hero .grid { grid-template-columns: 1fr; gap: 32px; }
+  .recond-grid { grid-template-columns: 1fr; gap: 34px; }
+  .beforeafter img { max-height: 620px; }
+  .contact-box { grid-template-columns: 1fr; padding: 38px 28px; }
+  .footer-box { grid-template-columns: 1fr 1fr; }
+  .footer-col--right { text-align: left; }
+}
+
+@media (max-width: 720px) {
+  .section { padding: 52px 0; }
+  .cards { grid-template-columns: 1fr; }
+  .card { min-height: 0; }
+  .thumbs { grid-template-columns: repeat(2, 1fr); }
+  .rental-grid { grid-template-columns: repeat(2, 1fr); }
+  .recond-gallery { grid-template-columns: 1fr; }
+  .recond-gallery img { height: 340px; }
+  .beforeafter img { max-height: 520px; }
+  .recond { padding: 56px 0; }
+  .field-row { grid-template-columns: 1fr; }
+  .form-foot { grid-template-columns: 1fr; }
+  .form-foot .btn { width: 100%; }
+  .footer-box { grid-template-columns: 1fr; padding: 28px 24px; }
+  .logo-block .logo-lockup { flex-direction: column; gap: 10px; }
+  .logo-block .logo-text b { font-size: 2.1rem; }
+  .warranty { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .recond-cta { flex-direction: column; align-items: stretch; }
+  .recond-cta .btn { text-align: center; }
+}
+
+@media (max-width: 420px) {
+  .logo-text b { font-size: 1.1rem; }
+  .logo-text i { font-size: .7rem; }
+  .logo-mark { width: 34px; height: 34px; font-size: .9rem; }
+}

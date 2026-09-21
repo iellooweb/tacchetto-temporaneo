@@ -1,0 +1,6 @@
+# Tacchetto Service — bozza per revisione cliente.
+# Non deve comparire nei motori di ricerca.
+# Da rimuovere insieme al resto della demo dopo l'approvazione.
+
+User-agent: *
+Disallow: /
