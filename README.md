@@ -14,14 +14,14 @@ Anteprima statica per far vedere al cliente come apparirebbe il nuovo servizio
 
 ## Da dove iniziare
 
-👉 **[`proposta.html`](proposta.html)** — spiega cosa cambia e perché, con gli schemi.
-È la pagina da guardare per prima.
+👉 **[`index.html`](index.html)** — la pagina di apertura: spiega cosa cambia e perché,
+con gli schemi. È quella che si apre aprendo l'indirizzo dell'anteprima.
 
-Poi le due pagine dell'anteprima:
+Da lì si raggiungono le due pagine ricostruite:
 
 | Pagina | Cosa mostra |
 |---|---|
-| [`index.html`](index.html) | Home con la nuova card tra i servizi e la riga nel riquadro in alto |
+| [`home.html`](home.html) | Home con la nuova card tra i servizi e la riga nel riquadro in alto |
 | [`assistenza.html`](assistenza.html) | Pagina Assistenza con la nuova sezione dedicata al ricondizionamento |
 
 Una fascia scura in cima a ogni pagina ricorda che si tratta di una bozza e
@@ -43,16 +43,17 @@ riporta alla pagina esplicativa.
 ## Struttura
 
 ```
-index.html        Home
-assistenza.html   Pagina Assistenza con la nuova sezione
-proposta.html     Spiegazione delle modifiche, con schemi
-style.css         Foglio di stile condiviso dalle due pagine del sito
+index.html        Spiegazione delle modifiche, con schemi — pagina di apertura
+home.html         Replica della home con la nuova card
+assistenza.html   Replica della pagina Assistenza con la nuova sezione
+style.css         Foglio di stile condiviso dalle due pagine replica
 img/              Le grafiche prima/dopo fornite dal cliente
 robots.txt        Esclusione dai motori di ricerca
+proposta.html     Reindirizzamento: conserva il primo indirizzo condiviso
 ```
 
-`proposta.html` ha il proprio stile incorporato: non dipende da `style.css`,
-così le modifiche all'anteprima non possono romperla.
+`index.html` ha il proprio stile incorporato: non dipende da `style.css`,
+così le modifiche alle pagine replica non possono romperla.
 
 ---
 
